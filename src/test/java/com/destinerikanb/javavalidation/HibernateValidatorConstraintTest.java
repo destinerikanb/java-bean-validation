@@ -1,5 +1,6 @@
 package com.destinerikanb.javavalidation;
 
+import com.destinerikanb.javavalidation.group.CreditCardPaymentGroup;
 import org.junit.jupiter.api.Test;
 
 public class HibernateValidatorConstraintTest extends AbstractValidatorTest{
