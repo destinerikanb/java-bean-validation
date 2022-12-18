@@ -1,6 +1,8 @@
 package com.destinerikanb.javavalidation;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class Person {
@@ -12,6 +14,10 @@ public class Person {
     @NotBlank(message = "Last name can not blank")
     @Size(max = 20, message = "Last name length max 20 characters")
     private String lastName;
+
+    @NotNull(message = "Address can not null")
+    @Valid
+    private Address address;
 
     public Person(String firstName, String lastName) {
         this.firstName = firstName;
@@ -35,6 +41,14 @@ public class Person {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override
