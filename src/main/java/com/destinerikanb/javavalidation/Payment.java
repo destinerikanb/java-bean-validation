@@ -2,9 +2,11 @@ package com.destinerikanb.javavalidation;
 
 import com.destinerikanb.javavalidation.group.CreditCardPaymentGroup;
 import com.destinerikanb.javavalidation.group.VirtualAccountPaymentGroup;
+import com.destinerikanb.javavalidation.payload.EmailErrorPayload;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.groups.ConvertGroup;
 import jakarta.validation.groups.Default;
 import org.hibernate.validator.constraints.LuhnCheck;
 import org.hibernate.validator.constraints.Range;
@@ -19,7 +21,8 @@ public class Payment {
     private Long amount;
 
     @NotBlank(groups = {CreditCardPaymentGroup.class}, message = "credit card must not blank")
-    @LuhnCheck(groups = {CreditCardPaymentGroup.class}, message = "Invalid credit card number")
+    @LuhnCheck(groups = {CreditCardPaymentGroup.class}, message = "Invalid credit card number",
+            payload = {EmailErrorPayload.class})
     private String creditCard;
 
     @NotBlank(groups = {VirtualAccountPaymentGroup.class}, message = "Invalid virtual account number")
@@ -27,6 +30,8 @@ public class Payment {
 
     @Valid
     @NotNull(groups = {VirtualAccountPaymentGroup.class, CreditCardPaymentGroup.class}, message = "Customer could not null")
+    @ConvertGroup(from = CreditCardPaymentGroup.class, to = Default.class)
+    @ConvertGroup(from = VirtualAccountPaymentGroup.class, to = Default.class)
     private Customer customer;
 
     public Payment(String orderId, Long amount, String creditCard, String virtualAccount) {
