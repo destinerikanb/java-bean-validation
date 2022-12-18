@@ -2,6 +2,7 @@ package com.destinerikanb.javavalidation;
 
 import com.destinerikanb.javavalidation.group.CreditCardPaymentGroup;
 import com.destinerikanb.javavalidation.group.VirtualAccountPaymentGroup;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.groups.Default;
@@ -24,6 +25,10 @@ public class Payment {
     @NotBlank(groups = {VirtualAccountPaymentGroup.class}, message = "Invalid virtual account number")
     private String virtualAccount;
 
+    @Valid
+    @NotNull(groups = {VirtualAccountPaymentGroup.class, CreditCardPaymentGroup.class}, message = "Customer could not null")
+    private Customer customer;
+
     public Payment(String orderId, Long amount, String creditCard, String virtualAccount) {
         this.orderId = orderId;
         this.amount = amount;
@@ -32,6 +37,14 @@ public class Payment {
     }
 
     public Payment() {
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getOrderId() {
@@ -73,6 +86,7 @@ public class Payment {
                 ", amount=" + amount +
                 ", creditCard='" + creditCard + '\'' +
                 ", virtualAccount='" + virtualAccount + '\'' +
+                ", customer=" + customer +
                 '}';
     }
 }
