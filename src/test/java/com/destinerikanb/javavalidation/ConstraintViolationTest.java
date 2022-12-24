@@ -47,7 +47,9 @@ public class ConstraintViolationTest {
 
     @Test
     void testValidationFailedSize() {
-        Person person = new Person("Destin Erika Nawang Budiarti", "Destin Erika Nawang Budiarti");
+        Person person = new Person();
+        person.setFirstName("Destin Erika Nawang Budiarti");
+        person.setLastName("Destin Erika Nawang Budiarti");
 
         Set<ConstraintViolation<Person>> constraintViolations = validator.validate(person);
         //Untuk cek bahwa yang gagal memang benar berjumlah 2 yaitu firstname dan lastname
@@ -64,7 +66,9 @@ public class ConstraintViolationTest {
 
     @Test
     void testValidationSuccess() {
-        Person person = new Person("Destin", "Budiarti");
+        Person person = new Person();
+        person.setFirstName("Destin");
+        person.setLastName("Budiarti");
 
         Set<ConstraintViolation<Person>> constraintViolations = validator.validate(person);
         //Untuk cek bahwa semua validasi berhasil, artinya set kosong

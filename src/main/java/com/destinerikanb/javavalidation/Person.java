@@ -19,11 +19,17 @@ public class Person {
     @Valid
     private Address address;
 
-    public Person(String firstName, String lastName) {
+    //Constructor Validation
+    @Valid
+    public Person(@NotBlank(message = "first name must not balank") String firstName,
+                  @NotBlank(message = "last name must not blank") String lastName,
+                  @NotNull(message = "address must not null") Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.address = address;
     }
 
+    @Valid
     public Person() {
     }
 
