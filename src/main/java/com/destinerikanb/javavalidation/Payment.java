@@ -1,5 +1,7 @@
 package com.destinerikanb.javavalidation;
 
+import com.destinerikanb.javavalidation.constraints.CheckCase;
+import com.destinerikanb.javavalidation.enums.CaseMode;
 import com.destinerikanb.javavalidation.group.CreditCardPaymentGroup;
 import com.destinerikanb.javavalidation.group.VirtualAccountPaymentGroup;
 import com.destinerikanb.javavalidation.payload.EmailErrorPayload;
@@ -14,6 +16,10 @@ import org.hibernate.validator.constraints.Range;
 
 public class Payment {
 
+    @CheckCase(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class},
+            mode = CaseMode.UPPER,
+            message = "{order.id.upper}"
+    )
     @NotBlank(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class}, message = "{order.id.notblank}")
     @Size(groups = {CreditCardPaymentGroup.class, VirtualAccountPaymentGroup.class}, min = 1, max = 10, message = "{order.id.size}")
     private String orderId;
