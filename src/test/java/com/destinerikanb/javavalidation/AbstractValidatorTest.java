@@ -1,5 +1,9 @@
 package com.destinerikanb.javavalidation;
 
+import com.destinerikanb.javavalidation.extractor.DataIntegerValueExtractor;
+import com.destinerikanb.javavalidation.extractor.DataValueExtractor;
+import com.destinerikanb.javavalidation.extractor.EntriValueExtractorKey;
+import com.destinerikanb.javavalidation.extractor.EntryValueExtractorValue;
 import jakarta.validation.*;
 import jakarta.validation.executable.ExecutableValidator;
 import org.junit.jupiter.api.AfterEach;
@@ -18,7 +22,15 @@ public abstract class AbstractValidatorTest {
 
     @BeforeEach
     void setUp() {
-        validatorFactory = Validation.buildDefaultValidatorFactory();
+//        validatorFactory = Validation.buildDefaultValidatorFactory();
+
+        //Validator factory dengan registrasi value extractor
+        validatorFactory = Validation.byDefaultProvider().configure()
+                .addValueExtractor(new DataValueExtractor())
+                .addValueExtractor(new EntriValueExtractorKey())
+                .addValueExtractor(new EntryValueExtractorValue())
+                .addValueExtractor(new DataIntegerValueExtractor())
+                .buildValidatorFactory();
         validator = validatorFactory.getValidator();
         executableValidator = validator.forExecutables();
         messageInterpolator = validatorFactory.getMessageInterpolator();
