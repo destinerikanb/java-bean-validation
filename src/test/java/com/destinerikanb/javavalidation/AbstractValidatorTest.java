@@ -56,6 +56,15 @@ public abstract class AbstractValidatorTest {
         }
     }
 
+    void validateWithException(Object o){
+        Set<ConstraintViolation<Object>> violations = validator.validate(o);
+
+        //exception
+        if(!violations.isEmpty()){
+            throw new ConstraintViolationException(violations);
+        }
+    }
+
     @AfterEach
     void tearDown() {
         validatorFactory.close();
